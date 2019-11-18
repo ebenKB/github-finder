@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
+import GithubContext from '../../context/github/githubContext';
+import AlertContext from '../../context/Alert/alertContext';
 
-const Search = ({canClear, searchUsers, clearUsers, setAlert}) => {
-  
+const Search = ({canClear, clearUsers, setAlert}) => {
+  const githubContext = useContext(GithubContext);
+  const alertContext = useContext(AlertContext);
+
   // useState - react hook
   const [text, setText] = useState('');
 
@@ -14,9 +18,9 @@ const Search = ({canClear, searchUsers, clearUsers, setAlert}) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if(text === ''){
-      setAlert('Please enter text', 'light')
+      alertContext.setAlert('Please enter text', 'light')
     } else {
-      searchUsers(text);
+      githubContext.searchUsers(text);
       setText('');
     }
   }
@@ -34,10 +38,10 @@ const Search = ({canClear, searchUsers, clearUsers, setAlert}) => {
         <input type="submit" value="search" className="btn btn-dark btn-block"/>
       </form>
       {/* check whether we can show the clear button  */}
-      {canClear &&
+      {githubContext.users.length > 0 &&
         <button 
           className="btn btn-light btn-clock"
-          onClick={clearUsers}
+          onClick={githubContext.clearUsers}
         >
         Clear users
       </button>
@@ -46,12 +50,5 @@ const Search = ({canClear, searchUsers, clearUsers, setAlert}) => {
   )
 }
 
-// Define the prop types
-Search.propTypes = {
-  clearUsers: PropTypes.func.isRequired,
-  searchUsers: PropTypes.func.isRequired,
-  canClear: PropTypes.bool.isRequired,
-  setAlert: PropTypes.func.isRequired,
-}
 
 export default Search
