@@ -70,7 +70,7 @@ const getUser = async (username) => {
         &client_secret=${githubClientSecret}`);
       
       dispatch({
-        type: GET_USER,
+        type: GET_REPOS,
         payload: res.data,
       })
   }

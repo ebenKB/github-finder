@@ -4,16 +4,19 @@ import { Link  } from 'react-router-dom';
 import Repos from '../Repos/repos';
 import GithubContext from '../../context/github/githubContext';
 
-const User = ({match}) =>{
+const User = ({ match }) =>{
   const githubContext = useContext(GithubContext);
   
+  const {getUser, loading, user, repos, getUserRepos} = githubContext;
+
   useEffect(() => {
-    getUser(match.params.login);
-    getUserRepos(match.params.login);
+   getUser(match.params.login);
+   getUserRepos(match.params.login);
     // eslint-disable-next-line
   }, []);
 
-  const { getUser, loading, user, repos, getUserRepos } = githubContext;
+
+  
   const {
     name, 
     avatar_url,
