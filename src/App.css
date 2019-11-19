@@ -343,6 +343,11 @@ h3 {
   text-align: center;
 }
 
+.form-container .card h1,
+.card h3{
+  text-align: left;
+}
+
 table th,
 table td {
   padding: 1rem;
